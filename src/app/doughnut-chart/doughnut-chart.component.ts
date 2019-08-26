@@ -36,7 +36,8 @@ export class DoughnutChartComponent implements OnInit {
       enabled: false
     },
     animation: {
-      onComplete: () => { this.drawNeedle(300, -90 * Math.PI / 180) }
+      onProgress: () => { this.drawNeedle(90) },
+      onComplete: () => { this.drawNeedle(90) }
     }
   };
 
@@ -46,7 +47,9 @@ export class DoughnutChartComponent implements OnInit {
     this.ctx = this.canvas.nativeElement.getContext('2d');
   }
 
-  drawNeedle(radius: number, radianAngle: number): void {
+  drawNeedle(degreeAngle: number): void {
+    let radianAngle = degreeAngle * Math.PI / 180 * -1;
+
     const cw = this.canvas.nativeElement.offsetWidth;
     const ch = this.canvas.nativeElement.offsetHeight;
 
@@ -57,7 +60,7 @@ export class DoughnutChartComponent implements OnInit {
     this.ctx.rotate(radianAngle);
     this.ctx.beginPath();
     this.ctx.moveTo(0, -7);
-    this.ctx.lineTo(radius, 0);
+    this.ctx.lineTo(ch *80/100, 0);
     this.ctx.lineTo(0, 7);
     this.ctx.fillStyle = 'black';
     this.ctx.fill();
@@ -66,7 +69,6 @@ export class DoughnutChartComponent implements OnInit {
     this.ctx.beginPath();
     this.ctx.arc(cx, cy, 7, 0, Math.PI * 2);
     this.ctx.fill();
-
   }
 }
 
